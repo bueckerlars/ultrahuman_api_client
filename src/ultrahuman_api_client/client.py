@@ -157,7 +157,7 @@ class UltrahumanAPIClient:
         :raises UltrahumanAPIInternalServerError: If there's a server error (500).
         :raises UltrahumanAPIError: For other API errors.
         """
-        url = "partner/daily_metrics"
+        url = "/partner/daily_metrics"
 
         params: dict[str, str] = {}
 
