@@ -18,7 +18,7 @@ from ultrahuman_api_client.exceptions import (
 )
 
 
-class UltrahumanAPIClient():
+class UltrahumanAPIClient:
 
     _BASE_URL: Final[str] = "https://partner.ultrahuman.com/api/v1"
 
@@ -31,9 +31,9 @@ class UltrahumanAPIClient():
         """
         Initialize the Ultrahuman API Client.
 
-        The base URL is set to the default value of https://api.ultrahuman.com/api/v1/. 
+        The base URL is set to the default value of https://api.ultrahuman.com/api/v1/.
         If a different base URL is provided, it will be used instead.
-        If no API key is provided, the API key will be fetched from the environment variable ULTRAHUMAN_API_KEY. 
+        If no API key is provided, the API key will be fetched from the environment variable ULTRAHUMAN_API_KEY.
         If no API key is found in the environment variables, a ValueError will be raised.
 
         :param api_key: The API key for the Ultrahuman API.
@@ -41,17 +41,20 @@ class UltrahumanAPIClient():
         :raises ValueError: If no API key is provided and not found in environment variables.
         """
 
-        logger.debug(f"Initializing Ultrahuman API Client with API key: {api_key} and base URL: {base_url}")
-        
+        logger.debug(
+            f"Initializing Ultrahuman API Client with API key: {api_key} and base URL: {base_url}"
+        )
+
         if api_key is None:
             load_dotenv()
             env_api_key = os.getenv("ULTRAHUMAN_API_KEY")
             if env_api_key is not None:
                 api_key = SecretStr(env_api_key)
         if api_key is None:
-            raise ValueError("API key is not provided and not found in environment variables")
+            raise ValueError(
+                "API key is not provided and not found in environment variables"
+            )
         self._api_key = api_key
-
 
         if base_url is None:
             base_url = self._BASE_URL
@@ -66,7 +69,7 @@ class UltrahumanAPIClient():
     def close(self) -> None:
         """
         Close the httpx client.
-        
+
         This method should be called when the client is no longer needed
         to properly clean up resources.
         """
@@ -75,7 +78,7 @@ class UltrahumanAPIClient():
     def __enter__(self) -> "UltrahumanAPIClient":
         """
         Enter the context manager.
-        
+
         :return: The client instance.
         """
         return self
@@ -88,7 +91,7 @@ class UltrahumanAPIClient():
     ) -> None:
         """
         Exit the context manager and close the httpx client.
-        
+
         :param exc_type: Exception type.
         :param exc_val: Exception value.
         :param exc_tb: Exception traceback.
@@ -155,29 +158,31 @@ class UltrahumanAPIClient():
         :raises UltrahumanAPIError: For other API errors.
         """
         url = "partner/daily_metrics"
-        
+
         params: dict[str, str] = {}
-        
+
         if date is not None:
             params["date"] = date.isoformat()
         elif start_epoch is not None and end_epoch is not None:
             params["start_epoch"] = str(start_epoch)
             params["end_epoch"] = str(end_epoch)
         else:
-            raise ValueError("Either 'date' or both 'start_epoch' and 'end_epoch' must be provided")
-        
+            raise ValueError(
+                "Either 'date' or both 'start_epoch' and 'end_epoch' must be provided"
+            )
+
         if email is not None:
             params["email"] = email
-        
+
         logger.debug(f"Making request to {self._base_url}{url} with params {params}")
-        
+
         try:
             response = self._client.get(url, params=params)
             response.raise_for_status()
         except httpx.HTTPStatusError as e:
             status_code = e.response.status_code
             error_message: str = "Unknown error"
-            
+
             # Try to extract error message from response
             try:
                 response_data = e.response.json()
@@ -196,7 +201,7 @@ class UltrahumanAPIClient():
                     error_message = str(e)
             except Exception:
                 error_message = e.response.text or str(e)
-            
+
             # Raise appropriate exception based on status code
             if status_code == 401:
                 raise UltrahumanAPIAuthenticationError(error_message)
@@ -211,12 +216,12 @@ class UltrahumanAPIClient():
         except httpx.RequestError as e:
             # Handle network errors
             raise UltrahumanAPIError(f"Request failed: {str(e)}", status_code=None)
-        
+
         # Parse response
         try:
             response_data = response.json()
             ultrahuman_response = UltrahumanResponse.model_validate(response_data)
-            
+
             # Check if response has an error field
             if ultrahuman_response.error:
                 # If there's an error in the response body, raise appropriate exception
@@ -230,10 +235,14 @@ class UltrahumanAPIClient():
                 elif status_code == 500:
                     raise UltrahumanAPIInternalServerError(ultrahuman_response.error)
                 else:
-                    raise UltrahumanAPIError(ultrahuman_response.error, status_code=status_code)
-            
+                    raise UltrahumanAPIError(
+                        ultrahuman_response.error, status_code=status_code
+                    )
+
             return ultrahuman_response.data
         except Exception as e:
             if isinstance(e, UltrahumanAPIError):
                 raise
-            raise UltrahumanAPIError(f"Failed to parse response: {str(e)}", status_code=None)
+            raise UltrahumanAPIError(
+                f"Failed to parse response: {str(e)}", status_code=None
+            )
