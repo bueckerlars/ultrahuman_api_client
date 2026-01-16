@@ -1,12 +1,17 @@
 # Ultrahuman API Client
 
+[![GitHub Issues](https://img.shields.io/github/issues/bueckerlars/ultrahuman_api_client)](https://github.com/bueckerlars/ultrahuman_api_client/issues)
+[![Dependencies](https://img.shields.io/librariesio/github/bueckerlars/ultrahuman_api_client)](https://libraries.io/github/bueckerlars/ultrahuman_api_client)
+[![License](https://img.shields.io/github/license/bueckerlars/ultrahuman_api_client)](LICENSE)
+[![Python Version](https://img.shields.io/badge/python-3.13%2B-blue)](https://www.python.org/downloads/)
+
 A Python client library for interacting with the Ultrahuman Partner API. This client provides a simple and type-safe interface to retrieve daily health metrics from the Ultrahuman platform.
 
 ## Installation
 
 ### Prerequisites
 
-Make sure you have Python (>=3.8) installed on your system.
+Make sure you have Python (>=3.13) installed on your system.
 The recommended way to manage dependencies is with [uv](https://github.com/astral-sh/uv), a fast Python package manager.
 
 #### Installing `uv`
@@ -324,5 +329,6 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## Links
 
-- [Bug Tracker](https://github.com/bueckerlars/ultrahuman_api_client/issues)
-- [Homepage](https://github.com/bueckerlars/ultrahuman_api_client)
+- **Repository**: [bueckerlars/ultrahuman_api_client](https://github.com/bueckerlars/ultrahuman_api_client)
+- **Issues**: [Bug Tracker](https://github.com/bueckerlars/ultrahuman_api_client/issues)
+- **License**: [MIT License](LICENSE)
