@@ -1,7 +1,6 @@
 # Ultrahuman API Client
 
 [![GitHub Issues](https://img.shields.io/github/issues/bueckerlars/ultrahuman_api_client)](https://github.com/bueckerlars/ultrahuman_api_client/issues)
-[![Dependencies](https://img.shields.io/librariesio/github/bueckerlars/ultrahuman_api_client)](https://libraries.io/github/bueckerlars/ultrahuman_api_client)
 [![License](https://img.shields.io/github/license/bueckerlars/ultrahuman_api_client)](LICENSE)
 [![Python Version](https://img.shields.io/badge/python-3.13%2B-blue)](https://www.python.org/downloads/)
 
