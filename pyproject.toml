@@ -3,10 +3,15 @@ build-backend = "setuptools.build_meta"
 requires = ["setuptools>=61", "wheel"]
 
 [project]
-dependencies = []
-description = "Project Template"
-license = {text = "Proprietary"}
-name = "python-template"
+dependencies = [
+    "httpx>=0.28.1",
+    "loguru>=0.7.3",
+    "pydantic>=2.12.5",
+    "python-dotenv>=1.0.0",
+]
+description = "A python client for the Ultrahuman-API"
+license = "MIT"
+name = "ultrahuman-api-client"
 readme = "README.md"
 requires-python = ">=3.13,<4"
 version = "0.1.0"
@@ -16,12 +21,13 @@ dev = [
   "pip-tools>=6.12.2",
   "pre-commit>=2.20.0",
   "pytest-cov>=4.0.0",
-  "pytest>=7.2.0"
+  "pytest-httpx>=0.28.0",
+  "pytest>=7.2.0",
 ]
 
 [project.urls]
-"Bug Tracker" = "https://github.com/bueckerlars/python-template/issues"
-"Homepage" = "https://github.com/bueckerlars/python-tempalte"
+"Bug Tracker" = "https://github.com/bueckerlars/ultrahuman_api_client/issues"
+"Homepage" = "https://github.com/bueckerlars/ultrahuman_api_client"
 
 [tool.pyright]
 exclude = [".venv", "alembic/versions", "tests"]
